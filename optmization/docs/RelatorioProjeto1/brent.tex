@@ -1,0 +1,61 @@
+\section{Interpolação Parabólica e o Método de Brent}
+
+\vspace{0.5cm}
+
+\subsection{Princípios básicos}
+
+\vspace{0.5cm}
+
+A idéia por trás desse método é utilizar uma aproximação da função $f(x)$ por um polinômio de grau 2 $g(x)$ que passa por três pontos pertencentes a um intervalo enquadrante. Dessa maneira, aproxima-se o mínimo de $f(x)$ pelo mínimo da parábola obtida. A fórmula \ref{eq:parab} permite encontrar a abcissa $x$ correspondente ao mínimo da parábola para os pontos $a,b$ e $c$.\\
+
+\begin{equation}
+  x = b - \frac{1}{2}\frac{(b-a)^2[f(b)-f(c)] - (b-c)^2[f(b)-f(a)]}{(b-a)[f(b)-f(c)] - (b-c)[f(b)-f(a)]} 
+  \label{eq:parab}
+\end{equation}
+
+\vspace{0.5cm}
+
+Redefine-se, então, o intervalo para a próxima iteração de acordo com a avaliação da função objetivo nesses três pontos, descartando o pior deles e guardando o minimizador desta parábola aproximada como novo ponto. Tal interpolação parabólica é dita inversa pois buscamos a abscissa $x$ e não a ordenada $f(x)$. \\
+
+Da expressão \ref{eq:parab}, podemos notar que existe uma singularidade quando os três pontos são colineares. Além disso, o método funciona da mesma maneira tanto na presença de um mínimo quanto de um máximo. \\
+
+Por isso, para contornar tais dificuldades, a estratégia proposta por Brent é utilizar uma busca segura (ex: seção-áurea) quando que a função for não cooperativa e trocar para para interpolação parabólica inversa sempre que possível. Assim, incorpora-se a robustez do método da seção-áurea com a rapidez da interpolação quadrática.\\
+
+\begin{figure}[!h]
+\centering
+    \includegraphics[width=0.75\textwidth]{parabola.pdf}
+    \caption{Convergência pelo Método de Brent. Figura retirada de \cite{Brent} }
+\label{fig:parabolas}
+\end{figure}
+
+A figura \ref{fig:parabolas} mostra duas iterações da interpolação parabólica. É possível notar que a primeira estimativa do minimizador é obtida em $4$ e que, em seguida, esta muda para $5$, se aproximando ainda mais do real valor do minimizador da função $f(x)$.
+ 
+\subsection{Algoritmo}
+
+\vspace{0.5cm}
+
+Durante qualquer fase do algoritmo, este possui um conjunto de 6 pontos $(a, b, u, v, w, x)$. Os pontos $a$ e $b$ definem o intervalo enquadrante de cada iteração; $x$ é o minimizador de $f(x)$ obtido até o momento; $w$ é o ponto de segundo menor valor da função objetivo até o momento e $v$ é o valor anterior de $w$; $u$, por sua vez,  é o ponto onde a função foi avaliada mais recentemente. Um outro ponto que também aparece no algoritmo é o ponto médio entre $a$ e $b$, i.e $x_m$, no entanto, a função objetivo não é avaliada nele.
+
+Se após o passo $d$ da interpolação parabólica, o melhor ponto $x$ pertencer ao intervalo $[a, \, b]$ e, ainda, se o deslocamento provocado por este passo for inferior ao deslocamento provocado na penúltima iteração, significa que $x$ está convergindo e que a interpolação parabólica pode ser usada. Caso alguma dessas condições não seja satisfeita, o passo $d$ é calculado utilizando a razão áurea do maior segmento dentro do intervalo $[a, \,b]$.\\
+
+O algoritmo retoma o início dos cálculos dos novos pontos $(a, b, u, v, w, x)$ até que a tolerância seja atingida ($ |x-x_m| < tol $), alternando,portanto, entre e a interpolação polinomial e o método da razão áurea na determinação dos intervalos para as próximas iterações. O diagrama de fluxo \ref{fig:brentFlow} exemplifica o algoritmo.
+
+ \begin{figure}
+ \centering
+ \scalebox{1}{\input{brentFlow.tex}}
+ \caption{Fluxograma do Método de Interpolação}
+ \label{fig:brentFlow}
+ \end{figure}
+
+\subsection{Resultado}
+
+O resultado obtido para o método de Brent utilizando a função teste apresentada previamente neste relatório (eq. \ref{eq:func_obj}) pode ser observado na figura \ref{fig:brent}.\\
+
+\begin{figure}[h!]
+\centering
+\scalebox{1}{\input{./figuras/brent.tex}}
+\caption{Tolerância: $\epsilon =  0.01$. Número de iterações: $n = 12$}
+\label{fig:brent}
+\end{figure}
+
+É interessante notar que a performance foi bem similar ao método da seção áurea já que a tolerância $\epsilon$ escolhida foi a mesma. No entanto, o método de Brent é consideravelmente mais rápido devido à utilizão da interpolação polinomial. Ao passo que foram necessárias 17 iterações para Seção Áurea convergir, somente 12 bastaram para garantir o mesmo resultado usando o método de Brent.

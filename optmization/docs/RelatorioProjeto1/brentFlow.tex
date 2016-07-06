@@ -1,0 +1,44 @@
+% Define block styles
+\tikzstyle{io} = [trapezium,trapezium left angle=70,trapezium right angle=-70,minimum height=1cm, draw, fill=yellow!20, text width=6em, text badly centered, node distance=2.5cm, inner sep=0pt]
+\tikzstyle{decision} = [diamond, draw, fill=red!20, 
+    text width=6em, text badly centered, node distance=3cm, inner sep=0pt]
+\tikzstyle{block} = [rectangle, draw, fill=blue!20, 
+    text width=10em, text centered, rounded corners, minimum height=4em]
+    \tikzstyle{block0} = [rectangle, draw, fill=blue!20, 
+    text width=4em, text centered, rounded corners, minimum height=4em]
+    \tikzstyle{block1} = [rectangle, draw, fill=cyan!20, node distance=3cm,
+    text width=5em, text centered, rounded corners, minimum height=4em]
+    \tikzstyle{line} = [draw, -latex']
+\tikzstyle{cloud} = [draw, ellipse,fill=green!20, node distance=2cm,
+    minimum height=2em]
+    \tikzstyle{io2} = [trapezium,trapezium left angle=70,trapezium right angle=-70,minimum height=1cm, draw, fill=yellow!20, text width=1.5cm, text badly centered, node distance=3cm, inner sep=0pt]
+    
+\begin{tikzpicture}[node distance = 2cm, auto]
+    % Place nodes
+    \node [io] (input) {$I_1 = [a\, b]$\\$\varepsilon: tolerancia$};
+    \node [block, below of =input] (init) {Atualiza $x,w,v,u$\\$x_m = \frac{a+b}{2}$}; % $x=w=v$: criterio 3 pontos\\$d_0=0;
+    %\node [block, below of = init] (parab) {Atualiza:\\$x$:minimizador parabola\\$w$:segundo menor valor f\\$v$ : $w$ anterior\\$u$: ultima avaliacao $f$\\};
+    \node [block, below of =init] (parab) {$r = (x-w)\,(f_x-f_v)$\\$q = (x-v)\,(f_x-f_w)$\\$p = (x-v)\,q - (x-w)\,r$};
+    \node [decision, below of=parab] (evaluate) {$(x+d)\in [a\,b]$\\ $\&\&$\\ $d_k<\frac{d_{k-2}}{2}$};
+    \node [below of = evaluate](aux){};
+    \node [block1,right of = aux,node distance=3cm] (interp) {$d=\frac{p}{q}$};
+    \node [block1, left of=aux, node distance=3cm] (gold) {d: Seção Áurea};
+    \node [block0, below of=aux] (act) {$u = x + d$};
+    \node [decision, below of=act] (evaluate2) {$|x - x_m|<\varepsilon$};
+    \node [io2, below of=evaluate2] (out) {$x_{min}=x$};
+    \node [cloud,below of = out] (stop) {FIM};
+    %\node [left of = parab_step, node distance=3cm](aux2){};
+       
+    % Draw edges
+    \path [line] (input) -- (init);
+    \path [line] (init) -- (parab);
+    \path [line] (parab) -- (evaluate);
+    \path [line,rounded corners] (evaluate.east) -| node [above] {sim} (interp);
+    \path [line,rounded corners] (evaluate.west) -| node [above] {não}(gold);
+    \path [line,rounded corners] (gold.south) |- (act.west);
+    \path [line,rounded corners] (interp.south) |- (act.east);
+    \path[line] (act) -- (evaluate2);
+    \path [line] (evaluate2) -- node [near start] {sim} (out);
+    \path [line,rounded corners] (evaluate2.east)-- ++(35mm,0mm) |- node [above] {não} (init.east);
+    \path [line] (out) -- (stop);
+\end{tikzpicture}

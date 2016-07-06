@@ -1,0 +1,41 @@
+\documentclass[tikz]{standalone}
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows}
+\usetikzlibrary{calc,positioning}
+\usetikzlibrary{topaths}
+
+\begin{document}
+
+\begin{tikzpicture}
+    \tikzstyle{subj} = [circle, minimum width=4pt, fill, inner sep=0pt]
+
+    % Before diagram .........................
+	\node[subj,label=below:$A$] (A) at (-2,0) {};
+	\node[subj,label=above:$M$] (M) at (0.5,0) {};
+	\node[subj,label=below:$B$] (B) at (2,0) {};	
+
+%    \node[obj,  label=below:x] (xa) at (0,0) {};
+%    \node[subj, label=below:z] (za) at (1,0) {};
+%    \node[dc,   label=below:y] (ya) at (2,0) {};
+	 \draw[-] (A) -- (M);
+ 	 \draw[-] (M) -- (B);
+
+	\node[label, right=0.5 of B] (label) {$(\overline{AB}/\overline{AM}=\overline{AM}/\overline{MB})$};
+
+%    \path[-]   (za)    edge                node[swap]  {$t$}       (xa)
+%                        edge                node        {$\alpha$}  (ya);
+
+%    \node at (3,0) {$\vdash^{*}$};
+%
+%    % After diagram .........................
+%    \node[obj,  label=below:x] (xb) at (4,0) {};
+%    \node[subj, label=below:z] (zb) at (5,0) {};
+%    \node[dc,   label=below:y] (yb) at (6,0) {};
+%
+%    \path[->]   (zb)    edge                node[swap]  {$t$}       (xb)
+%                        edge                node        {$\alpha$}  (yb)
+%                (xb)    edge[bend left=60]  node        {$\alpha$}  (yb);
+
+\end{tikzpicture}
+
+\end{document}

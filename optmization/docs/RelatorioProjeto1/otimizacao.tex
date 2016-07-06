@@ -1,0 +1,383 @@
+\documentclass[a4paper,12pt,utf8x,notitlepage]{article}
+
+%%%%%%%%%%%%%%%%
+%                              		  %
+%  Packages and page geometry  %             
+%                              		  %             
+%%%%%%%%%%%%%%%%
+
+%------------------------------------> Setting language
+\usepackage[english, brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{subfigure}
+\usepackage{enumerate}
+
+%------------------------------------> To enrich layouts 
+\usepackage{amssymb,amsmath,amsthm} %  equations
+\usepackage[ruled,vlined]{algorithm2e}     %  algorithms
+\usepackage{minitoc, footmisc} 		     %  pages
+
+%------------------------------------> To enrich code layout 
+\usepackage{helvet, courier, type1cm}
+\usepackage{listings}                   
+
+%------------------------------------> To enrich figures
+\usepackage{graphicx}
+\usepackage[small]{caption} % for figures legends   
+\graphicspath{{./figuras/}} % Default path
+
+\usepackage{epstopdf}
+\usepackage{pdfpages}
+
+%------------------------------------> Defining colors
+\usepackage{color} 
+\definecolor{blackgreen}{rgb}{0,0.4,0}
+\definecolor{gray}{gray}{0.3}
+%\definecolor{blue}{rgb}{0,0,0.5}
+\definecolor{green}{rgb}{0,0.5,0}
+\definecolor{lightgreen}{rgb}{0,0.6,0}
+\definecolor{purple}{rgb}{0.5,0,0.5}
+\definecolor{darkred}{rgb}{0.5,0,0}
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+\definecolor{orange}{rgb}{1,0.5,0}
+
+
+%------------------------------------> To enrich annexes 
+\usepackage{appendix}
+
+%------------------------------------> Changing default geometry layout
+\usepackage{geometry}
+\usepackage{setspace}
+\addtolength{\hoffset}{-0.3cm}
+\addtolength{\voffset}{-.5cm}
+\addtolength{\textheight}{1.5cm}
+\addtolength{\textwidth}{0.8cm}
+
+%------------------------------------> Using fancy features for header and footpage 
+\usepackage{fancyhdr}
+
+%------------------------------------> To create hyperlinks
+\usepackage[colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref} %, breaklinks=true
+
+
+% Para usar matlab2tickz
+\usepackage{pgfplots}
+% and optionally (as of Pgfplots 1.3):
+\pgfplotsset{compat=newest}
+\pgfplotsset{plot coordinates/math parser=false}
+%\RequirePackage[demo]{graphicx} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                               %
+%  Some commands/configuration  %             
+%                               %             
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Formating code typeset structure
+\lstset{language=MATLAB, %C
+%
+basicstyle=\ttfamily\scriptsize,        % code font size
+keywordstyle=\color{red}\textbf,	% key words style
+commentstyle=\color{blue},		% comments style
+%
+% numbers=left,                   	% where to put line numbers
+% numberstyle=\ttfamily\scriptsize, 	% line nuimbers style
+% numberblanklines=false,			
+%
+captionpos=t,                   % put legend under the text
+frame=TB,	                 
+%
+showspaces=false,               % show spaces
+showstringspaces=false,         % show characters
+showtabs=false,                 % show tabulation with characters
+tabsize=4,	                % tabulation size
+%
+moredelim=[s][\color{blackgreen}]{'}{'},
+moredelim=[s][\color{blackgreen}]{"}{"},
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+%                      %
+%  Personal hot keys   %
+%                      %
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\tens}[1]{#1}
+\providecommand{\vect}[1]{\mbox{\boldmath${#1}$}}%$
+\newcommand{\argmin}[1]{\underset{#1}{\operatorename{argmin}}}
+\newcommand{\diag}{\mathop{\mathrm{diag}}}
+\newcommand{\norm}[1]{\ensuremath{\left\lVert #1 \right\rVert}}
+
+\newcommand{\TODO}[1]{\textcolor{red}{\large TODO:}\textcolor{purple}{[#1]~}}
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+\newcommand{\Lagr}{\mathcal{L}}
+
+\renewcommand{\frame}[1]{\ensuremath{\Psi_{#1}}}        %frame \Psi_{\uppercase{#1}}
+\newcommand{\R}[1]{\ensuremath{\mathbb{R}^{#1}}}        %R for real
+\newcommand{\Id}[1]{\ensuremath{\tens{I}_{#1}}}         %Identity matrix
+\newcommand{\tp}{\ensuremath{^{\mathsf{T}}}}		%transpose
+\newcommand{\ft}[2]{\ensuremath{_{#1,#2}}} 		%from to
+\newcommand{\rt}[1]{\ensuremath{^{#1}}}			%relative to	transpose
+\newcommand{\HM}{\ensuremath{\tens{H}}}			%homogenous matrix
+\newcommand{\Rot}{\ensuremath{\tens{R}}}		%rotation matrix
+\newcommand{\homo}[1]{\ensuremath{\widetilde{#1}}}	%homogeneous coordinate
+\renewcommand{\skew}[1]{\ensuremath{\widehat{#1}}}	%skew-matrix related to a vector
+\newcommand{\pt}[1][p]{\ensuremath{\vect{#1}}}		%point in space
+\newcommand{\ve}[1][u]{\ensuremath{\vect{#1}}}		%vector in space
+\newcommand{\force}{\ensuremath{\vect{f}}}		%force
+\newcommand{\torque}{\ensuremath{\vect{\tau}}}		%torque
+\newcommand{\ttorque}{\ensuremath{\tau}}		%torque for subscript
+
+\newcommand{\bmat}[1]{\mbox{\boldmath{$#1$}}} 
+
+%%%%%%%%%%%%%%%%%%%%%%%
+%                                                                             %
+%             		Report Body                             %               
+%                                                                             %
+%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage[]{mcode}
+
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows}
+\usetikzlibrary{calc}
+\usepackage{verbatim}
+
+
+\begin{document}
+%-------------------------  Gestion des tables des matières et numérotations  -------------------------%
+%\frontmatter
+\setcounter{tocdepth}{3} 
+\setcounter{secnumdepth}{3}
+
+%------------------------------------> Title Page
+\begin{titlepage} 
+\input{capa.tex}
+\end{titlepage}
+
+% Page's header
+\fancyhead{}
+\renewcommand{\footrulewidth}{0pt}
+\renewcommand{\headrulewidth}{0.4pt}
+\pagenumbering{roman}
+\setcounter{page}{1}
+\pagestyle{fancy}
+\fancyhead[LE,RO]{\slshape Projeto \#1}
+\fancyhead[LO,RE]{\slshape CPE-737 Otimização}
+\fancyfoot{}
+
+
+
+%------------------------------------> Table of contents
+\tableofcontents
+\clearpage
+
+%------------------------------------> List of Figures
+%\listoffigures
+%\addcontentsline{toc}{chapter}{\listfigurename}
+
+
+
+% Page's header
+\fancyhead{}
+\pagenumbering{arabic}
+\setcounter{page}{1}
+\fancyhead[LE,RO]{\slshape Projeto \#1}
+\fancyhead[LO,RE]{\slshape CPE-737 Otimização}
+\renewcommand{\footrulewidth}{0pt}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancyfoot[C]{\vfill \thepage}
+
+\section{Considerações Iniciais}
+
+\vspace{0.5cm}
+
+Nos algoritmos de otimização apresentados nas seções a seguir (Método de Fibonacci, Seção Áurea e Interpolação Polinomial ), considera-se que as funções de entrada de cada um desses algoritmos são suaves e unimodais no intervalo enquadrante passado como argumento inicialmente. Tais funções são também tais que $\emph{f}:  \mathbb{R} \rightarrow  \mathbb{R}$.\\
+
+Neste relatório, apresenta-se o resultado da convergência em cada um dos três métodos para a mesma função, presente na equação \ref{eq:func_obj}. Outras funções podem ser testadas utilizando a interface gráfica em anexo a este relatório, conforme demonstrado na apresentação do trabalho em sala de aula.
+
+\begin{equation}
+f = x^4 + 10 \, x^3
+\label{eq:func_obj}
+\end{equation}
+
+
+\subsection{Enquadramento Inicial}
+
+\vspace{0.5cm}
+
+O problema de busca de um mínimo para uma dada função em um determinado intervalo envolve o conceito de unimodalidade de funções. Uma função unimodal em um dado intervalo possui apenas um mínimo naquele intervalo. Dessa maneira, se uma função $\emph{f}$ é unimodal em um intervalo $[a,b]$, então este intervalo enquadra um mínimo e é um intervalo de interesse nos métodos numéricos.\\
+
+Para o método de brent, caso um intervalo seja escolhido, antes da otimização propriamente dita, faz-se um teste para verificar se o intervalo em questão é enquadrante. \\
+
+Neste caso, utilizou-se o critério dos 3 pontos: sejam $x_1, x_2$ e $x_3 \in \mathbb{R}$ tais que $x_1 < x_2 < x_3$ e uma função $\emph{f}:  \mathbb{R} \rightarrow  \mathbb{R}$ suave. Se $\emph{f} (x_1)\geq\emph{f} (x_2)< \emph{f} (x_3)$, então o intervalo $\begin{bmatrix}x_1 & x_3\end{bmatrix}$ enquadra um mínimo. Vale ressaltar que o resultado continua válido se $x_1 > x_2 > x_3$. É importante frizar também que o critério dos três pontos garante que o intervalo é enquadrante mas não necessariamente unimodal, o que significa que pode haver mais de um mínimo neste intervalo.\\
+
+Na situação em que não há um palpite inicial sobre o intervalo alvo para qualquer um dos métodos deste trabalho, procura-se, a partir de $x_1$, $x_2$ e $x_3$ que satisfaçam o critério dos três pontos. Dessa forma, acrescenta-se um $\Delta$ a $x_1$ e uma comparação de $f_2$ e $f_1$ é realizada. Se $f_2 \leq f_1$, procura-se $x_3$ neste mesmo sentido até encontrar $x_3$ tal que $f_3 > f_2$. Caso contrário, caso $f_2>f_1$, inverte-se o sentido da busca. O algoritmo completo do enquadramento inicial por três pontos pode ser facilmente entendido através do diagrama de fluxo da figura \ref{fig:enq}.\\
+
+\begin{figure}[!h]
+\centering
+\scalebox{.85}{\input{framing.tex}}
+\caption{Enquadramento Inicial por três pontos}
+\label{fig:enq}
+\end{figure}
+
+\section{Método de Fibonacci}
+
+\vspace{0.5cm}
+
+\subsection{Algoritmo}
+
+Neste método, dado um intervalo enquadrante $I_k = [a \,  b]$, no qual a função $f$ é unimodal, escolhem-se dois pontos internos simétricos em relação ao centro, conforme a figura \ref{fig:fib}.
+
+\begin{figure}[!h]
+\centering
+    \includegraphics[width=0.35\textwidth]{fibonacci.pdf}
+    \caption{Pontos do método de Fibonnaci}
+   \label{fig:fib}
+\end{figure}
+
+Um fator de redução inicial $0.5<\alpha_1<0.7$ é usado para encontrar os primeiros valores de $x_2$ e $x_3$ dentro do intervalo enquadrante inicial $I_1 = [a \, b] \subset \mathbb{R}$. \\
+
+Então, a função-objetivo é avaliada nesses dois pontos $x_2$ e $x_3$ e o intervalo é reduzido de acordo com a comparação dos valores de $f(x_2)= f_2$ e $f(x_3)=f_3$: se $f_2<f_3$, o novo intervalo é definido como $I_{k+1}=[x_1 \,x_3]$. Caso contrário, o intervalo seguinte passa a ser $I_{k+1}=[x_2 \,x_4]$. Finalmente, o fator de redução é recalculado de acordo com a equação \ref{eq:alpha} e o procedimento se repete até que o número de reduções desejado $n \in \mathbb{Z}$ seja atingido.
+
+\begin{equation}
+\alpha = \frac{L_{ini}-L_{fim}}{L_{fim}}
+\label{eq:alpha}
+\end{equation}
+
+Novamente, o diagrama de fluxo do algoritmo implementado é apresentado na figura \ref{fig:fibonacci}.
+
+\begin{figure}[h!]
+\centering
+\scalebox{0.85}{\input{fibonacci.tex}}
+\caption{Método de Fibonacci}
+\label{fig:fibonacci}
+\end{figure}
+
+\subsection{Resultado}
+
+O resultado obtido utilizando a função teste enunciada em \ref{eq:func_obj} é apresentado na figura \ref{fig:fibo}
+
+\begin{figure}[!h]
+\centering
+\scalebox{0.85}{\input{./figuras/fibonacci.tex}}
+\caption{Número de iterações: $n=10$. Tamanho do último intervalo $L_f = 0.1215$}
+\label{fig:fibo}
+\end{figure}
+
+O número de iterações escolhido foi $n=10$ para que o método fosse suficientemente distinto do método da seção áurea. Tal número de iterações nos fornece um intervalo final $L_f = 0.1215$. O resultado poderia ser melhorado arbritariamente apenas aumentando o valor de $n$.
+
+\section{Seção Áurea}
+
+\vspace{0.5cm}
+
+\subsection{Algoritmo}
+
+Este método se baseia na divisão áurea de um segmento. Dado um segmento de reta $\overline{AB}$, dividi-lo na chamada razão áurea significa achar um ponto M deste segmento tal que o segmento todo está para a parte maior assim como esta parte maior está para a parte menor, conforme a figura \ref{fig:div_gold}.
+
+\begin{figure}[!h]
+\centering
+    \includegraphics[width=0.55\textwidth]{gold.pdf}
+    \caption{Divisão áurea de um segmento}
+\label{fig:div_gold}
+\end{figure}
+
+O valor da razão entre esses segmentos que realiza isso é dada pela equação \ref{eq:u}.
+\begin{equation}
+u = \frac{\sqrt{5}-1}{2}  \approx 0.6180
+\label{eq:u}
+\end{equation}
+
+O método da seção áurea é bastante parecido com o método de Fibonacci. A diferença reside no fato de que os pontos centrais $x_2$ e $x_3$ são determinados através da razão áurea da equação \ref{eq:u}. Além disso, nesse caso, não se determina um número desejado de reduções como no método de Fibonacci, mas sim uma tolerância $\varepsilon \in  \mathbb{R}$ para o intervalo final.
+
+De fato, um incoveniente do algoritmo de Fibonacci está relacionado à necessidade de se conhecer a priori o número total de reduções e o índice k associado, ao passo que, no método da divisão áurea, isso não é necessário. Na verdade, demonstra-se inclusive que, se o número de reduções prevista no algoritmo de Fibonacci for grande (n>10), a primeira redução do método de Fibonacci corresponde justamente à divisão áurea.\\
+
+O diagrama de fluxo da implentação do algoritmo da seção áurea é apresentado na figura \ref{fig:gold}.
+
+\begin{figure}[h!]
+\centering
+\scalebox{.85}{\input{gold_section.tex}}
+\caption{Seção Áurea}
+\label{fig:gold}
+\end{figure}
+
+\subsection{Resultado}
+
+\vspace{0.5cm}
+
+O resultado obtido utilizando a função teste enunciada em \ref{eq:func_obj} é apresentado na figura \ref{fig:aurea}.\\
+
+\begin{figure}[h!]
+\centering
+\scalebox{.85}{\input{./figuras/secao_aurea.tex}}
+\caption{Tolerância: $\epsilon =  0.01$. Número de iterações: $n = 17$}
+\label{fig:aurea}
+\end{figure}
+
+Para atingir a tolerância estipulada de $\epsilon =  0.01$, foram necessárias 17 iterações do algoritmo. O algoritmo da seção áurea é extremamente robusto e seguro, no entanto, veremos como uma aproximação da função objetivo por um polinômio quadrático mesclado ao algoritmo da seção áurea pode ter uma performance superior.
+
+\section{Interpolação Parabólica e o Método de Brent}
+
+\vspace{0.5cm}
+
+\subsection{Princípios básicos}
+
+A idéia por trás desse método é utilizar uma aproximação da função $f(x)$ por um polinômio de grau 2 $g(x)$ que passa por três pontos pertencentes a um intervalo enquadrante. Dessa maneira, aproxima-se o mínimo de $f(x)$ pelo mínimo da parábola obtida. A fórmula \ref{eq:parab} permite encontrar a abcissa $x$ correspondente ao mínimo da parábola para os pontos $a,b$ e $c$.\\
+
+\begin{equation}
+  x = b - \frac{1}{2}\frac{(b-a)^2[f(b)-f(c)] - (b-c)^2[f(b)-f(a)]}{(b-a)[f(b)-f(c)] - (b-c)[f(b)-f(a)]} 
+  \label{eq:parab}
+\end{equation}
+
+Redefine-se, então, o intervalo para a próxima iteração de acordo com a avaliação da função objetivo nesses três pontos, descartando o pior deles e guardando o minimizador desta parábola aproximada como novo ponto. Tal interpolação parabólica é dita inversa pois buscamos a abscissa $x$ e não a ordenada $f(x)$. \\
+
+Da expressão \ref{eq:parab}, podemos notar que existe uma singularidade quando os três pontos são colineares. Além disso, o método funciona da mesma maneira tanto na presença de um mínimo quanto de um máximo. \\
+
+Por isso, para contornar tais dificuldades, a estratégia proposta por Brent é utilizar uma busca segura (ex: seção-áurea) quando que a função for não cooperativa e trocar para para interpolação parabólica inversa sempre que possível. Assim, incorpora-se a robustez do método da seção-áurea com a rapidez da interpolação quadrática.\\
+
+\begin{figure}[!h]
+\centering
+    \includegraphics[width=0.55\textwidth]{parabola.pdf}
+    \caption{Convergência pelo Método de Brent. Figura retirada de \cite{Brent} }
+\label{fig:parabolas}
+\end{figure}
+
+A figura \ref{fig:parabolas} mostra duas iterações da interpolação parabólica. É possível notar que a primeira estimativa do minimizador é obtida em $4$ e que, em seguida, esta muda para $5$, se aproximando ainda mais do real valor do minimizador da função $f(x)$.
+ 
+\subsection{Algoritmo}
+
+Durante qualquer fase do algoritmo, este possui um conjunto de 6 pontos $(a, b, u, v, w, x)$. Os pontos $a$ e $b$ definem o intervalo enquadrante de cada iteração; $x$ é o minimizador de $f(x)$ obtido até o momento; $w$ é o ponto de segundo menor valor da função objetivo até o momento e $v$ é o valor anterior de $w$; $u$, por sua vez,  é o ponto onde a função foi avaliada mais recentemente. Um outro ponto que também aparece no algoritmo é o ponto médio entre $a$ e $b$, i.e $x_m$, no entanto, a função objetivo não é avaliada nele.
+
+Se após o passo $d$ da interpolação parabólica, o melhor ponto $x$ pertencer ao intervalo $[a, \, b]$ e, ainda, se o deslocamento provocado por este passo for inferior ao deslocamento provocado na penúltima iteração, significa que $x$ está convergindo e que a interpolação parabólica pode ser usada. Caso alguma dessas condições não seja satisfeita, o passo $d$ é calculado utilizando a razão áurea do maior segmento dentro do intervalo $[a, \,b]$.
+
+\begin{figure}[h!]
+\centering
+\scalebox{.85}{\input{brentFlow.tex}}
+\caption{Fluxograma do Método de Interpolação}
+\label{fig:brentFlow}
+\end{figure}
+
+O algoritmo retoma o início dos cálculos dos novos pontos $(a, b, u, v, w, x)$ até que a tolerância seja atingida ($ |x-x_m| < tol $), alternando,portanto, entre e a interpolação polinomial e o método da razão áurea na determinação dos intervalos para as próximas iterações. O diagrama de fluxo \ref{fig:brentFlow} exemplifica o algoritmo.
+
+\subsection{Resultado}
+
+O resultado obtido para o método de Brent utilizando a função teste apresentada previamente neste relatório (eq. \ref{eq:func_obj}) pode ser observado na figura \ref{fig:brent}.\\
+
+\begin{figure}[h!]
+\centering
+\scalebox{0.85}{\input{./figuras/brent.tex}}
+\caption{Tolerância: $\epsilon =  0.01$. Número de iterações: $n = 12$}
+\label{fig:brent}
+\end{figure}
+
+É interessante notar que a performance foi bem similar ao método da seção áurea já que a tolerância $\epsilon$ escolhida foi a mesma. No entanto, o método de Brent é consideravelmente mais rápido devido à utilizão da interpolação polinomial. Ao passo que foram necessárias 17 iterações para Seção Áurea convergir, somente 12 bastaram para garantir o mesmo resultado usando o método de Brent.
+
+% \include{brent}
+
+\bibliography{bibliografia}
+\bibliographystyle{plain}
+
+
+\end{document}

@@ -1,0 +1,67 @@
+function showGrafico(fun, metodo,a,b,arg)
+
+switch metodo
+    case 'fibonacci'
+        n = arg;
+        [I,res]=fibonacci(fun,a,b,n); %n=10
+        method = 'M\''etodo de Fibonacci: ';
+    case 'secao_aurea'
+        tol = arg;
+        [I,res]=secao_aurea(fun,a,b,tol); %tol=0.01
+        method = 'M\''etodo da Sec\~ao \''Aurea: ';
+    case 'brent'
+        tol = arg;
+        [I,res]=brent(fun,a,b,tol); %tol=0.01
+        method = 'M\''etodo de Brent: ';
+end
+
+strfun ='$f(x) = x^4 + 10 x^3$';
+print_res(res,fun,method,strfun)
+matlab2tikz(strcat(strcat('./Relatorio/figuras/',metodo),'.tex'));
+fprintf('Numero de iterações =%d',size(res,1));
+end
+
+function []=print_res(res,fun,methodtitle,strfun)
+x=(res(1,1)-0.01):0.01:(res(1,2)+0.01);         %to plot
+plot(x,feval(fun,x),'LineWidth',2); %to plot
+grid on;
+hold
+xlim([res(1,1) res(1,2)]);                        %to plot
+
+varstr = 'x';
+xlabel(strcat(strcat('$',varstr),'$'),'Interpreter','latex');                        %to plot
+
+fstr = strcat('$f(',varstr,')$');
+ylabel(fstr,'Interpreter','latex');                     %to plot
+
+
+titlestr = strcat(methodtitle,strfun);
+title(titlestr,'Interpreter','latex');
+
+for j=2:1:(size(res,1)-1)
+    scatter(res(j,1),res(j,3),80,'MarkerEdgeColor','k',...
+        'MarkerFaceColor','y',...
+        'LineWidth',1.5);               %to plot
+    scatter(res(j,2),res(j,4),80,'MarkerEdgeColor','k',...
+        'MarkerFaceColor','y',... 
+        'LineWidth',1.5);               %to plot
+end
+
+scatter(res(1,1),res(1,3),80,'MarkerEdgeColor','k',...
+    'MarkerFaceColor','r',...
+    'LineWidth',1.5);               %to plot
+scatter(res(1,2),res(1,4),80,'MarkerEdgeColor','k',...
+    'MarkerFaceColor','r',... 
+    'LineWidth',1.5);               %to plot
+
+scatter(res(end,1),res(end,3),80,'MarkerEdgeColor','k',...
+    'MarkerFaceColor','g',...
+    'LineWidth',1.5);
+scatter(res(end,2),res(end,4),80,'MarkerEdgeColor','k',...
+    'MarkerFaceColor','g',...
+    'LineWidth',1.5);
+hold off;
+
+
+
+end

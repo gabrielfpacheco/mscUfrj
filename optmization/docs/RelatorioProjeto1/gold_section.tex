@@ -1,0 +1,45 @@
+% Define block styles
+\tikzstyle{decision} = [diamond, draw, fill=red!20, 
+    text width=4.5em, text centered, node distance=3cm, inner sep=0pt]
+\tikzstyle{block} = [rectangle, draw, fill=blue!20, 
+    text width=9em, text centered, rounded corners, minimum height=1em]
+\tikzstyle{block2} = [rectangle, draw, fill=cyan!20, node distance=2.5cm,
+    text width=9em, text centered,rounded corners, minimum height=3.5em]
+\tikzstyle{line} = [draw, -latex']
+\tikzstyle{cloud} = [draw, ellipse,fill=green!20, node distance=2cm,
+    minimum height=2em]
+    \tikzstyle{io} = [trapezium,trapezium left angle=70,trapezium right angle=-70,minimum height=1cm, draw, fill=yellow!20, text width=5.5em, text badly centered, node distance=2.5cm, inner sep=0pt]
+    \tikzstyle{io2} = [trapezium,trapezium left angle=70,trapezium right angle=-70,minimum height=0.5cm, draw, fill=yellow!20, text width=4em, text badly centered, node distance=3.5cm, inner sep=0pt]
+    
+    
+\begin{tikzpicture}[node distance = 2cm, auto]
+    % Place nodes
+    \node [io] (input) {$I_1: [a\;b]$ \\ $\varepsilon$: toler\^ancia};
+    \node [block,below of = input] (init) {$x_1 = a$; $x_4 = b$ \\$L_i = b - a$; $u = \frac{\sqrt{5}-1}{2}$\\$x_2 = u x_1 + (1-u) x_4$\\$x_3 = (1-u)x_1 + ux_4$};
+    \node [decision, below of=init] (evaluate) {$f_2 < f_3$};
+    \node[below of = evaluate](aux){};
+    \node [block2, left of=aux,node distance=3.5cm] (passo7) {$a=x_2$\\ $b=x_4$ \\$L_f = b-a$};
+    \node [decision,below of=passo7] (tolerancia) {$L_f < \varepsilon$};
+    \node [block2, right of=aux,node distance=3.5cm] (passo6) {$a = x_1$\\ $b = x_3$\\ $L_f = b-a$};
+    \node [decision,below of=passo6] (tolerancia2) {$L_f < \varepsilon$};
+    \node [block2, below of = tolerancia] (passo7parte2) {$ x_1 = x_2; \,x_2 = x_3$\\$x_3 = (1-u)a+ub$};
+    \node [block2, below of = tolerancia2] (passo6parte2) {$x_4 = x_3; \, x_3 = x_2$\\$x_2 = ua+(1-u)b$};
+    \node[io2, right of = tolerancia,node distance=3.5cm](out){$I_f:[a\;b]$};
+    \node[cloud, below of = out](stop){FIM};
+     
+        
+    % Draw edges
+    \path [line] (input) -- (init);
+    \path [line] (init) -- (evaluate);
+    \path [line] (evaluate.south west) -- node [above]{não} (passo7);
+    \path [line] (evaluate.south east) -- node [above] {sim} (passo6);
+    \path [line] (passo7) -- (tolerancia);
+    \path [line] (passo6) -- (tolerancia2);
+    \path [line] (tolerancia) -- node [near start] {não} (passo7parte2);
+    \path [line] (tolerancia2) -- node [near start] {não} (passo6parte2);
+    \path[line] (tolerancia) -- node [above] {sim} (out);
+    \path[line] (tolerancia2) -- node [above] {sim} (out);
+    \path[line] (out) -- (stop);
+    \draw [line,rounded corners] (passo7parte2.west) -- ++(-0.5,0) |- node[anchor=west] {} (evaluate.west);
+    \draw [line,rounded corners] (passo6parte2.east) -- ++(0.5,0) |- node[anchor=east] {} (evaluate.east);
+ \end{tikzpicture}

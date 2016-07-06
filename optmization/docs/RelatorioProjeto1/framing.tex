@@ -1,0 +1,39 @@
+% Define block styles
+\tikzstyle{decision} = [diamond, draw, fill=red!20, 
+    text width=4em, text centered, node distance=2.5cm, inner sep=0pt]
+\tikzstyle{block} = [rectangle, draw, fill=blue!20, 
+    text width=6em, text centered, rounded corners, minimum height=3em]
+\tikzstyle{block2} = [rectangle, draw, fill=cyan!20, 
+    text width=6.5em, text centered,rounded corners, minimum height=3em]
+\tikzstyle{line} = [draw, -latex']
+\tikzstyle{cloud} = [draw, ellipse,fill=green!20, node distance=2cm,
+    minimum height=2em]
+    \tikzstyle{io} = [trapezium,trapezium left angle=70,trapezium right angle=-70,minimum height=1.5cm, draw, fill=yellow!20, text width=9em, text badly centered, node distance=2.5cm, inner sep=0pt]
+    \tikzstyle{io2} = [trapezium,trapezium left angle=70,trapezium right angle=-70,minimum height=1.5cm, draw, fill=yellow!20, text width=3em, text badly centered, node distance=2.5cm, inner sep=0pt]
+    
+\begin{tikzpicture}[node distance = 2cm, auto]
+    % Place nodes
+    \node [io] (init) {$x_1  \in \mathbb{R}$: inicial \\ $\Delta  \in \mathbb{R}$: avanço fixo \\$\gamma \geq 1$ : expans\~ao};
+    \node [block,below of = init] (init2) {$x_2 = x_1 + \Delta$ \\ $f_1 = f(x_1)$ \\ $f_2 = f(x_2)$};
+    \node [decision, below of=init2] (evaluate1) {$f_2 \leq f_1$};
+    \node [block2, left of=evaluate1,node distance=3.5cm] (inversao) {Invers\~ao de sentido: $\Delta = - \Delta$};
+    \node [block2,below of=inversao] (passo4) {$a = x_1$, $b = x_2$ \\ $x_1=b$, $x_2 = a$};
+    \node [block, below of=evaluate1] (passo5) {$x_3 = x_2 + \gamma \Delta$\\$f_3=f(x_3)$};
+    \node [decision, below of=passo5] (evaluate2) {$f_3>f_2$};
+    \node [block2, right of = evaluate2,node distance=3.5cm] (passo7) {$x_1 = x_2$ $x_2 = x_3$};
+    \node [io2,below of = evaluate2] (passo8) {$a = x_1$ \\ $b = x_3$};
+    \node[cloud, below of = passo8](stop){FIM};
+    
+    % Draw edges
+    \path [line] (init) -- (init2);
+    \path [line] (init2) -- (evaluate1);
+    \path [line] (evaluate1) -- node [near start] {não} (inversao);
+    \path [line] (inversao) -- (passo4);
+    \path [line] (passo4) -- (passo5);
+    \path [line] (evaluate1) -- node [near start] {sim} (passo5);
+    \path [line] (passo5) -- (evaluate2);
+    \path [line] (evaluate2) -- node [near start] {sim} (passo8);
+    \path [line] (evaluate2) -- node [near start] {não} (passo7);
+    \path [line,rounded corners] (passo7) |- ($(passo7.north)$) |- (passo5);
+    \path[line] (passo8) -- (stop);
+ \end{tikzpicture}

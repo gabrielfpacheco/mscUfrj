@@ -1,0 +1,27 @@
+\select@language {brazil}
+\contentsline {section}{\numberline {1}Considera\IeC {\c c}\IeC {\~o}es Iniciais}{1}{section.1}
+\contentsline {subsection}{\numberline {1.1}Modalidade}{1}{subsection.1.1}
+\contentsline {subsection}{\numberline {1.2}Busca Espacial}{1}{subsection.1.2}
+\contentsline {subsection}{\numberline {1.3}Busca Linear}{2}{subsection.1.3}
+\contentsline {subsection}{\numberline {1.4}Crit\IeC {\'e}rios de Parada}{2}{subsection.1.4}
+\contentsline {subsection}{\numberline {1.5}Interface}{2}{subsection.1.5}
+\contentsline {subsection}{\numberline {1.6}Resultados}{3}{subsection.1.6}
+\contentsline {section}{\numberline {2}M\IeC {\'e}todo do Gradiente}{4}{section.2}
+\contentsline {subsection}{\numberline {2.1}Descri\IeC {\c c}\IeC {\~a}o}{4}{subsection.2.1}
+\contentsline {subsection}{\numberline {2.2}Resultado}{5}{subsection.2.2}
+\contentsline {section}{\numberline {3}M\IeC {\'e}todo do Gradiente Conjugado}{5}{section.3}
+\contentsline {subsection}{\numberline {3.1}Descri\IeC {\c c}\IeC {\~a}o}{5}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}Resultado}{7}{subsection.3.2}
+\contentsline {section}{\numberline {4}M\IeC {\'e}todo de Newton}{8}{section.4}
+\contentsline {subsection}{\numberline {4.1}Descri\IeC {\c c}\IeC {\~a}o}{8}{subsection.4.1}
+\contentsline {subsection}{\numberline {4.2}Resultado}{9}{subsection.4.2}
+\contentsline {section}{\numberline {5}M\IeC {\'e}todo de Newton Modificado}{10}{section.5}
+\contentsline {subsection}{\numberline {5.1}Descri\IeC {\c c}\IeC {\~a}o}{10}{subsection.5.1}
+\contentsline {subsection}{\numberline {5.2}Resultado}{10}{subsection.5.2}
+\contentsline {section}{\numberline {6}M\IeC {\'e}todo de Quasi-Newton}{11}{section.6}
+\contentsline {subsection}{\numberline {6.1}Descri\IeC {\c c}\IeC {\~a}o}{11}{subsection.6.1}
+\contentsline {subsection}{\numberline {6.2}Resultado}{12}{subsection.6.2}
+\contentsline {section}{\numberline {7}Resultados Complementares}{13}{section.7}
+\contentsline {subsection}{\numberline {7.1}Outras fun\IeC {\c c}\IeC {\~o}es de duas vari\IeC {\'a}veis}{13}{subsection.7.1}
+\contentsline {subsection}{\numberline {7.2}Fun\IeC {\c c}\IeC {\~o}es com mais de duas vari\IeC {\'a}veis}{14}{subsection.7.2}
+\contentsline {section}{\numberline {8}Fluxogramas}{16}{section.8}

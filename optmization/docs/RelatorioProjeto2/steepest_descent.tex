@@ -1,0 +1,41 @@
+% Define block styles
+\tikzstyle{io} = [trapezium,trapezium left angle=70,trapezium right angle=-70,minimum height=1.5cm, draw, fill=yellow!20, text width=11em, text badly centered, node distance=2cm, inner sep=0pt]
+\tikzstyle{decision} = [diamond, draw, fill=red!20, 
+    text width=6em, text badly centered, node distance=3.5cm, inner sep=0pt]
+\tikzstyle{decision2} = [diamond, draw, fill=red!20, 
+    text width=9em, text badly centered, node distance=4.5cm, inner sep=0pt]
+\tikzstyle{block} = [rectangle, draw, fill=blue!20, node distance=4cm,
+    text width=10em, text centered, rounded corners, minimum height=4em]
+    \tikzstyle{block0} = [rectangle, draw, fill=blue!20, 
+    text width=4em, text centered, rounded corners, minimum height=2em]
+    \tikzstyle{block1} = [rectangle, draw, fill=blue!20, node distance=2cm,
+    text width=7em, text centered, rounded corners, minimum height=4em]
+    \tikzstyle{line} = [draw, -latex']
+\tikzstyle{cloud} = [draw, ellipse,fill=green!20, node distance=2cm,
+    minimum height=2em]
+    \tikzstyle{io2} = [trapezium,trapezium left angle=70,trapezium right angle=-70,minimum height=0.7cm, draw, fill=yellow!20, text width=1.6cm, text badly centered, node distance=3.5cm, inner sep=0pt]
+    
+\begin{tikzpicture}[node distance = 2cm, auto]
+    % Place nodes
+    \node [io] (input) {$x^0 \in \mathbb{R}^n$: ponto partida\\$\varepsilon_g,\varepsilon_a,\varepsilon_r$: toler\^ancias};
+    \node [block0, below of =input] (init) {$x^k = x^0$};
+    \node [block1, below of =init] (grad) {$\nabla f(x_k)=g(x_k)$};
+    \node [decision, below of=grad] (evaluate) {$|g(x_k)|< \varepsilon_g $};
+    \node [block, below of=evaluate] (direct) {$d^k=-\frac{g(x_k)}{||g(x_k)||}$\\$\tilde{f}(\alpha)=f(x^k+\alpha \, d^k)$\\$\alpha_k = min\{\tilde{f}(\alpha)\}$\\$x^{k+1}=x^k+\alpha_k \, d^k$};
+    \node [decision2, below of=direct] (evaluate2) {$|f(x^{k+1})-f(x^k)|<\varepsilon_a +\varepsilon_r \, |f(x^k)|$};
+    \node [block1,left of = evaluate, node distance = 4cm] (reinit) {$x^k = x^{k+1}$};    
+    \node [io2, below of=evaluate2] (out) {$x_{min}=x$};
+    \node [cloud,below of = out] (stop) {FIM};
+         
+    % Draw edges
+    \path [line] (input) -- (init);
+    \path [line] (init) -- (grad);
+    \path [line] (grad) -- (evaluate);
+    \path [line,rounded corners] (evaluate.east)-- ++(20mm,0mm) |- node [near start] {sim} (out.east);
+    \path [line] (evaluate) -- node [near start] {não}(direct);
+    \path [line] (direct) -- (evaluate2);
+    \path [line] (evaluate2) -- node [near start] {sim} (out);
+    \path [line,rounded corners] (evaluate2.west) -| node [near start] {não} (reinit);
+    \path [line,rounded corners] (reinit) |- (grad.west);
+    \path [line] (out) -- (stop);
+\end{tikzpicture}
