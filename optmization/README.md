@@ -8,3 +8,10 @@ Métodos numéricos para otimização vetorial determinística e estocástica.
 3) Dispor das funcionalidades da interface para os métodos implementados
 
 4) Enjoy :)
+
+# Agradecimentos
+O desenvolvimento desse software foi feito por:
+* Arthur Xaud
+* Carolina Neves
+* Gabriel Pacheco
+
