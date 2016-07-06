@@ -1,4 +1,4 @@
-# CPE-737 Otimização Aspectos Teóricos e Métodos Numéricos
+# [CPE-737] Otimização: Aspectos Teóricos e Métodos Numéricos
 Métodos numéricos para otimização vetorial determinística e estocástica.
 
 1) Executar o arquivo addPaths.m para adicionar as dependências ao path do Matlab
