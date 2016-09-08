@@ -9,7 +9,7 @@ Métodos numéricos para otimização vetorial determinística e estocástica.
 
 4) Enjoy :)
 
-# Agradecimentos
+# Colaboradores
 O desenvolvimento desse software foi feito por:
 * Arthur Xaud
 * Carolina Neves
